@@ -5,7 +5,6 @@ __pycache__/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
 
 # VS Code
 .vscode/
@@ -92,7 +91,6 @@ venv.bak/
 dmypy.json
 
 # Data files and models
-*.csv
 *.json
 *.parquet
 *.feather
