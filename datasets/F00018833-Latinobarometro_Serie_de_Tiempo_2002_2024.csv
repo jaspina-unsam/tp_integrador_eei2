@@ -1,0 +1,35 @@
+Variable;Título;LAT2002;LAT2003;LAT2004;LAT2005;LAT2006;LAT2007;LAT2008;LAT2009;LAT2010;LAT2011;LAT2013;LAT2015;LAT2016;LAT2017;LAT2018;LAT2020;LAT2023;LAT2024
+A_001_001;Apoyo a la democracia;p32st;p14st;p13st;p16st;p17st;p9st;p13st;p10st;P10ST;P13ST;P12STGBS;P11STGBS;P8STGBS;P8STGBS;P12STGBS;P10STGBS;P10STGBS;P11STGBS
+A_003_031;Satisfacción con la democracia;p33st;p15st;p14st;p18st;p21st;p12st;p22st.a;p12st.a;P11ST.A;P14ST.A;P13TGB.A;P12TG.A;P9STGBSA;P9STGBSC.A;P13STGBS.A;P11STGBS.A;P11STGBS.A;P12STGBS.A
+A_007_071;Escala Izquierda-Derecha;p64st;p60st;p87st;p34st;p47st;p67st;p56st;p69st;P60ST;P76ST;P41ST;P27ST;P17ST;P19STC;P22ST;P18ST;P16ST;P16ST
+A_010_001_061;¿Por cuál partido votaría si este domingo hubiera elecciones?;p45st;p54st;p30st;p48st;p38st;p64st;p61st;p35st;P29ST;P38ST;P22TGBSM;P23TGBSM;P15STGBS;P16STGBS;P21STGBS.A;P50STGBS.A;P43STGBS.A;P39STGBS.A
+B_006_061;Aprobación de la gestión del gobierno que encabeza el Presidente;p18no2;p24st;p46st;p29st;p43st;p32sta;p32st.a;p68st.a;P59ST.A;P36ST;P38STGBS;P48STGBS;P16STGBS;P17STGBSC;P20STGBSC;P17STGBS;P15STGBS;P15STGBS
+C_003_003_011;Preocupación de quedar sin trabajo dentro de los próximo doce meses;p26st;p89st;p88st;p85st;p91st;s1;s1;s1;S3;S9;S5;S3;S3;S4;S3;S3;S4;S4
+D_001_001;Situación económica actual del país;p2sta;p1st;p2st;p2st;p2st;p100st;p4st;p3st.a;P3ST.A;P3ST.A;P3STGBS;P3STGBS;P4STGBS;P4STGBSC;P6STGBSC;P4STGBS;P5STGBS;P6STGBS
+D_011_221;Bienes: Lavarropas;s10e;s10e;s10e;s15e;s15e;s19e;s19e;s19g;S21G;S28E;S22.E;S24.E;S16E;S17.E;S21.E;S26.D;S20.C;S20C
+D_011_261;Bienes: Auto;s10g;s10g;s10g;s15h;s15h;s19h;s19h;s19j;S21J;S28H;S22.H;S24.I;S16I;S17.I;S21.I;S26.G;S20.E;S20E
+D_011_271;Bienes: Alcantarillado/Cloacas ;s10k;s10k;s10k;s15l;s15l;s19l;s19l;s19n;S21N;S28K;S22.K;S24.K;S16K;S17.K;S21.K;S26.I;S20.G;S20G
+D_011_291;Bienes: Agua caliente;s10j;s10j;s10j;s15k;s15k;s19k;s19k;s19m;S21M;S28J;S22.J;S24.J;S16J;S17.J;S21.J;S26.H;S20.F;S20F
+H_002_011;Confianza en el Congreso;p36std;p21stf;p34stf;p45sta;p24st.f;p24st.f;p28st.a;p26st.a;P20ST.A;P22ST.A;P26TGB.C;P16ST.F;P13STD;P14ST.D;P15STGBSC.D;P13ST.D;P13ST.D;P14ST.D
+H_002_031;Confianza en el Gobierno;p34std;p23stg;p32std;p45stc;p32st.a;p24st.a;p31s.ta;p24st.a;P18ST.A;P20ST.A;P26TGB.B;P16ST.G;P13STE;P14ST.E;P15STGBSC.E;P13ST.E;P13ST.E;P14ST.E
+H_002_041;Confianza en el Poder Judicial;p34stc;p21ste;p34stb;p42std;p24st.a;p24st.d;p28st.b;p26st.b;P20ST.B;P22ST.B;P26TGB.E;P16ST.H;P13STF;P14ST.F;P15STGBSC.F;P13ST.F;P13ST.F;P14ST.F
+H_002_101;Confianza en la Iglesia;p34sta;p21sta;p32stc;p42sta;p32st.d;p27st.c;p28st.g;p26st.g;P20ST.G;P22ST.G;P28ST.E;P16ST.E;P13STC;P14ST.C;P15STGBSC.C;P13ST.C;P13ST.C;P14ST.C
+H_002_111;Confianza en la Policía ;p36ste;p21stb;p32stb;p42stf;p24st.d;p27st.f;p31st.c;p24st.c;P18ST.C;P20ST.C;P28TGB.B;P16TGB.B;P13STGBSB;P14STGBS.B;P15STGBSC.B;P13STGBS.B;P13STGBS.B;P14STGBS.B
+H_002_161;Confianza en las Fuerzas Armadas;p36stb;p21stg;p32stg;p42stb;p32st.e;p27st.d;p28st.d;p26st.d;P20ST.D;P22ST.D;P28TGB.A;P16TGB.A;P13STGBSA;P14STGBS.A;P15STGBSC.A;P13STGBS.A;P13STGBS.A;P14STGBS.A
+H_002_241;Confianza en los Partidos Políticos;p34stf;p21std;p34std;p47stb;p24st.c;p27st.e;p28st.c;p26st.c;P20ST.C;P22ST.C;P26TGB.G;P19ST.C;P13STG;P14ST.G;P15STGBSC.G;P13ST.G;P13ST.G;P14ST.G
+S_001;Sexo entrevistado;s1;s1;s1;s6;s6;s10;s8;s5;S7;S16;S10;S12;SEXO;SEXO;SEXO;SEXO;SEXO;SEXO
+S_002;Edad;s2;s2;s2;s7;s7;s11;s9;s6;S8;S17;S11;S13;EDAD;EDAD;EDAD;EDAD;EDAD;EDAD
+S_005;Principal ingreso familiar;s3;s3;s3;s8;s8;s12;s12;s9;S11;S19;S15;S17;S11;S12;S8;S14;S9;S9
+S_100;Nivel de estudios alcanzado - Entrevistado;s6;s6;s6;s11;s11;s15;s15;s12;S14;S21;S17;S19;S13;S14;S10;S16;S11;S11
+S_102;Edad de finalización de estudios - Entrevistado;s5;s5;s5;s10;s10;s14;s14;s11;S13;S20;S16;S18;S12;S13;S9;S15;S10;S10
+S_200;Estado ocupacional;s8a;s8a;s8a;s13a;s13a;s17a;s17a;s14a;S16A;S23A;S19.A;S21.A;S18A;S18.A;S14A;S24.A;S18.A;S18.A
+S_201;Estado ocupacional último (pasivos);s8b;s8b;s8b;s13b;s13b;s17b;s17b;s14b;S16B;S23B;S19.B;S21.B;S18B;S18.B;S14B;S24.B;S18.B;S18.B
+S_203;Estado ocupacional del jefe de familia;s18a;s14a;s16a;s22a;s22a;s26a;s22a;s22a;S24A;S31A;S25.A;S27.A;S20A;S20.A;S19A;S28.A;S22.A;S22A
+S_204;Estado ocupacional último del jefe de familia (pasivos);s18b;s14b;s16b;s22b;s22b;s26b;s22b;s22b;S24B;S31B;S25.B;S27.B;S20B;S20.B;S19B;S28.B;S22.B;S22B
+S_205;Tipo de trabajo que realiza el jefe de familia;s19;s15;s17;s23;s23;s27;s23;s23;S25;S32;S26;S28;S21;S21;S20;S29;S23;S23
+S_301;Apreciación nivel socioeconómico (realizado por el encuestador) ;s20;s16;s18;s24;s24;s28;s26;s26;S28;S34;S27;S29;S22;S22;S26;S30;S24;S24
+S_700;Religión;p65st;p91st;p90st;s2;s2;s4;s5;s7;S9;S18;S14;S16;S8;S9;S5;S10;S1;S1
+X_001;País ;idenpa;idenpa;idenpa;idenpa;idenpa;idenpa;idenpa;idenpa;IDENPA;IDENPA;IDENPA;IDENPA;IDENPA;IDENPA;IDENPA;IDENPA;IDENPA;IDENPA
+X_002;Año de investigación;numinves;numinves;numinves;numinves;numinves;numinves;numinves;numinves;NUMINVES;NUMINVES;NUMINVES;NUMINVES;NUMINVES;NUMINVES;NUMINVES;NUMINVES;NUMINVES;NUMINVES
+X_005;Ciudad;ciudad;ciudad;Ciudad;ciudad;ciudad;ciudad;ciudad;ciudad;CIUDAD;CIUDAD;CIUDAD;CIUDAD;CIUDAD;CIUDAD;CIUDAD;CIUDAD;CIUDAD;CIUDAD
+X_020;Ponderación;wt;wt;wt;wt;wt;wt;wt;wt;wt;WT;WT;WT;WT;WT;WT;WT;WT;WT
