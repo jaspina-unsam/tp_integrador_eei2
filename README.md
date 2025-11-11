@@ -29,29 +29,6 @@ Análisis bayesiano del dataset **Iris** y del **World Happiness Report (WHR)**,
 - `qog_bas_ts_jan25.csv`: Dataset original QoG
 - `WHR25_Data_Figure_2.1v3.xlsx`: Dataset del WHR
 
----
-
-## Modelos Implementados
-
-### 1. Modelos Lineales Generalizados Jerárquicos
-
-- Modelo jerárquico por país (2 niveles)
-- Modelo jerárquico por región (2 niveles)
-- Modelo jerárquico región → país (3 niveles) ✓ **mejor según LOO**
-
-### 2. Modelos de Mezcla Gaussianos
-
-- Exploración K ∈ {4, 5, 6, 7} componentes
-- K = 6 óptimo (vs. 10 regiones geopolíticas)
-
-### 3. Procesos Gaussianos
-
-- Serie temporal: Argentina (2006-2023)
-- Forecast bayesiano: 2025-2029
-- Kernel: Exponentiated Quadratic (RBF)
-
----
-
 ## Tecnologías
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
