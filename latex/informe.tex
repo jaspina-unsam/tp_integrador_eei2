@@ -1,0 +1,274 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{mathtools, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+
+% Configuración de enlaces
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    citecolor=blue,
+}
+
+% Configuración de encabezados
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Trabajo Práctico Integrador - EEI2}
+\lhead{Javier Spina}
+\rfoot{\thepage}
+
+\begin{document}
+
+% Carátula
+\begin{titlepage}
+    \centering
+
+    \vspace*{1cm}
+
+    {\Large \textbf{Universidad Nacional de San Martín}}\\[0.3cm]
+    {\large Escuela de Ciencia y Tecnología}\\[0.2cm]
+    {\large Licenciatura en Ciencia de Datos}\\[2cm]
+
+    \rule{\linewidth}{0.5mm}\\[0.4cm]
+    {\huge \textbf{Trabajo Práctico Integrador}}\\[0.3cm]
+    {\LARGE Estadística e Inferencia II}\\[0.2cm]
+    \rule{\linewidth}{0.5mm}\\[1cm]
+
+    {\Large \textbf{Modelado Bayesiano}}\\[0.3cm]
+    {\large Análisis Bayesiano del dataset Iris}\\
+    {\large Análisis del World Happiness Report}\\[2cm]
+
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \textbf{Estudiante:}\\
+            Javier Spina\\
+            \href{mailto:javierspina@gmail.com}{javierspina@gmail.com}\\
+            \href{mailto:jaspina@estudiantes.unsam.edu.ar}{jaspina@estudiantes.unsam.edu.ar}
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \textbf{Profesora:}\\
+            Fernanda Micucci\\[0.5cm]
+            \textbf{Cuatrimestre:}\\
+            2do 2025
+        \end{flushright}
+    \end{minipage}
+
+    \vspace{2cm}
+
+    \vfill
+
+    {\large Noviembre 2025}
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+En el presente trabajo vamos a trabajar con modelos bayesianos para estudiar dos conjuntos de datos:
+\begin{itemize}
+    \item El clásico dataset \textbf{Iris}, que contiene observaciones de flores del género Iris
+    \item Una selección de variables del dataset \textbf{Quality of Government}, que compila datos de diversas fuentes de ciencias sociales en clave país-año
+\end{itemize}
+
+Cada dataset se estudia en partes separadas con objetivos distintos. El objetivo que tienen en común es el estudio de datasets con el flujo de trabajo bayesiano, desde modelos simples hasta modelos y aplicaciones más complejas.
+
+El análisis del dataset Iris busca formalizar y mostrar la estructura de un trabajo bayesiano, que construye desde el análisis exploratorio de las variables hasta un modelo bayesiano jerárquico, usando criterios de información para seleccionar el mejor modelo para hacer inferencia sobre los datos.
+
+Para la segunda parte, vamos a utilizar lo aprendido sobre el flujo de trabajo bayesiano, pero esta vez siguiendo un camino que sale del puro entrenamiento estadístico. Aquí vamos a formular una hipótesis más de ``mundo real'' (aunque el dataset Iris no es sintético), más allá de la disciplina de Ciencia de Datos.
+\section{Descripción de los conjuntos de datos}
+\subsection{Dataset Iris}
+Este conjunto es famoso en las ramas de estadística, datos y análisis numérico. En este caso lo descargamos con ayuda de \verb|scikit-learn|. Cuando cargamos el dataset podemos ver 150 observaciones, sin nulos, con 4 variables numéricas que refieren a las medidas de las flores (pétalo y sépalo) y el target categórico que indica la especie a la que pertenecen.
+
+\vspace{.5cm}
+
+\includegraphics[width=0.9\linewidth]{imgs/histograma_iris.png}
+
+\subsection{Dataset Quality of Government}
+Es un conjunto de datos, creado por la Universidad de Gotemburgo, que registra decenas de miles de entradas de diferentes organizaciones a nivel mundial y las ordena para cada país en el tiempo. De esta manera, cada observación es un país en determinado año y los distintos índices y métricas de múltiples entes a nivel regional y global.
+
+Algunas de las organizaciones que son compiladas en este dataset son: Naciones Unidas, Banco Mundial, Organización Mundial de la Salud, World Happiness Report, entre muchísimas más.
+
+La versión estándar del dataset tiene 279 columnas en total, y la versión completa tiene una cantidad de variables en la escala de los miles. Para el presente trabajo vamos a tomar un subconjunto de 10 columnas en total.
+\begin{enumerate}
+    \item Variables de índice
+        \begin{itemize}
+            \item \verb|year|: año al que pertenece la medición. El dataset original comprende desde 1946 hasta 2024, actualizandose anualmente. El subconjunto de datos elegido para este informe usa datos desde 2005 hasta 2022.
+            \item \verb|cname_qog|: nombre del país estandarizado por el Instituto QoG.
+        \end{itemize}
+    \item Variables categóricas
+        \begin{itemize}
+            \item \verb|ht_region|: región geopolítica a la que pertenece. Fuente: \href{https://sites.google.com/site/authoritarianregimedataset/introduction}{The Authoritarian Regime Dataset}
+
+            \includegraphics[width=\linewidth]{imgs/planisferio_regiones.png}
+
+            \item \verb|ht_colonial|: bagaje colonial o potencia que dominó al país. Fuente: \href{https://sites.google.com/site/authoritarianregimedataset/introduction}{The Authoritarian Regime Dataset}
+        \end{itemize}
+    \item Variables predictoras
+        \begin{itemize}
+            \item \verb|undp_hdi|: Índice de Desarrollo Humano. Tiene 3 componentes: \textbf{esperanza de vida, tasa de alfabetización e ingreso per cápita}. Fuente: \href{https://hdr.undp.org/data-center/documentation-and-downloads}{United Nations Development Program}
+            \item \verb|top_top10_income_share|: proporción del ingreso del 10\% más rico de la población del país. Lo vamos a considerar una variable proxy para \textbf{desigualdad económica}. Fuente: \href{https://inequalitylab.world/en/}{World Inequality Lab}
+            \item \verb|vdem_gender|: Índice de empoderamiento político de las mujeres. Proxy para \textbf{igualdad de género estructural}. Fuente: \href{https://www.v-dem.net/}{V-Dem Project}
+            \item \verb|wdi_expedu|: Proporción de \textbf{gasto público en educación} sobre el total del PBI del país. Fuente: \href{https://databank.worldbank.org/source/world-development-indicators}{Banco Mundial}
+            \item \verb|wdi_unempilo|: Tasa de \textbf{desempleo} en cada país. Fuente: \href{https://databank.worldbank.org/source/world-development-indicators}{Banco Mundial}
+        \end{itemize}
+    \item Target
+        \begin{itemize}
+            \item \verb|whr_hap|: promedio nacional del índice de bienestar subjetivo, también conocido como índice de felicidad. Individuos de un país son encuestados acerca de su percepción en una escala de 0 a 10. Fuente: \href{https://www.worldhappiness.report/}{World Happiness Report}
+        \end{itemize}
+\end{enumerate}
+\includegraphics[width=\linewidth]{imgs/histplot_whrhap.png}
+Podemos ver en el histograma de \verb|whr_hap| que se desarrollan 3 picos (modas). Una alrededor de 5, otra cerca de 6 y la otra cerca de 7 y 8. Vamos a estar observando esto más de cerca utilizando un modelo de mezcla.
+
+Veamos también la correlación entre las variables:
+\vspace{0.5cm}
+
+\includegraphics[width=0.95\linewidth]{imgs/corrmap.png}
+\begin{itemize}
+    \item La mejor correlación la llevan \verb|whr_hap| $\sim$ \verb|undp_hdi|, con un $r = 0.79$
+    \item \verb|ht_colonial| tiene mayor correlación que \verb|ht_region| con el target, pero los modelos simulados con jerarquías basadas en \verb|ht_colonial| tuvieron un desempeño muy pobre en comparación con \verb|hr_region|
+    \item \verb|wdi_unempilo| es la variable más desacoplada del conjunto.
+\end{itemize}
+
+Veamos un desglose de la relación entre el índice de felicidad y el de desarrollo humano:
+
+\vspace{0.5cm}
+\includegraphics[width=0.95\linewidth]{imgs/lmplot.png}
+
+Sin ser experto en la materia geopolítica, podría considerar que hay regiones que pueden ser integradas, al menos para este análisis. De todas formas vamos a dejar los datos como los trae la fuente. La agregación no solo se justificaría por proximidad geográfica, sino por desempeños en esta relación para este ejercicio de modelado en particular. A primera vista: este asiático con sudeste asiático, y Latinoamérica con el Caribe. Como mencionamos antes, volveremos a este tema con el modelo de mezcla.
+\section{Modelos y análisis}
+
+\subsection{Modelos para Iris}
+Construimos dos modelos distintos para esta parte, uno jerárquico y el otro no. En ambos casos, decidimos usar priors no informativos. Como variable predictiva elegimos el ancho del pétalo, por la separación natural que ya mostraba en el histograma.
+\paragraph{Modelo no jerárquico}
+$$\begin{array}{rcl}
+    \mu & \sim & \text{Normal}(0, 10)\\
+    \sigma & \sim & \text{HalfNormal}(0, 5)\\
+    y_{\text{obs}} & \sim & \text{Normal}(f(\mu), f(\sigma))
+\end{array}
+$$
+
+\includegraphics[width=0.9\linewidth]{imgs/iris_trace_nhm.png}
+
+\paragraph{Modelo jerárquico}
+$$\begin{array}{rcl}
+    \mu & \sim & \text{Normal}(0, 10)\\
+    \tau & \sim & \text{HalfNormal}(0, 5)\\
+    \mu_{\text{especie}} & \sim & \text{Normal}(\mu, \tau)\\
+    \sigma_{\text{especie}} & \sim & \text{HalfNormal}(0, 5)\\
+    y_{\text{obs}} & \sim & \text{Normal}(f(\mu_{\text{especie}}), f(\sigma_{\text{especie}}))
+\end{array}
+$$
+
+\includegraphics[width=0.9\linewidth]{imgs/iris_trace_hm.png}
+
+\subsubsection{Análisis y evaluación}
+
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & rank & elpd\_loo & p\_loo & elpd\_diff & weight & se & dse \\
+\midrule
+No jerárquico & 0 & 40.52 & 5.97 & 0 & 1 & 10.37 & 0  \\
+Jerárquico & 1 & 40.45 & 6.03 & 0.07 & 0 & 10.38 & 0.05 \\
+\bottomrule
+\end{tabular}
+
+\begin{itemize}
+    \item No se observa \textit{shrinkage} o contracción hacia la media en el modelo jerárquico. Los valores de la media $\mu$ para cada especie conservan su valor central y rango de confianza.
+    \item El modelo no jerárquico tiene mejor ranking en la comparación de \verb|arviz| usando el criterio de información \verb|LOO|, aunque es una diferencia mínima. El modelo debe estar siendo castigado por su complejidad innecesaria.
+\end{itemize}
+
+\subsection{Modelos para Quality of Government}
+
+Para esta parte contamos con 3 modelos jerárquicos. Un modelo \textit{unpooled} no es de nuestro interés, ya que nos daría muy poca información para perseguir el objetivo que nos propusimos.
+
+Queremos ver si la percepción de los individuos puede ser explicada por componentes estructurales de cada país. De esta manera, los gobiernos serían capaces de intervenir directamente con políticas de estado para mejorar el bienestar individual de los habitantes de su nación.
+
+\vspace*{0.5cm}
+\includegraphics[width=0.315\linewidth]{imgs/whr_pais.pdf}
+\includegraphics[width=0.315\linewidth]{imgs/whr_region.pdf}
+\includegraphics[width=0.315\linewidth]{imgs/whr_region-pais.pdf}
+
+
+Para todos los modelos se escalaron las variables entre con $\sim \mathcal{N}(0, 1)$. Los beneficios son varios, pero para resaltar los más importantes: comparabilidad de los betas (pesos) de las componentes del modelo y para la convergencia de las cadenas \verb|MCMC|.
+
+\subsubsection{Análisis y evaluación}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+ & rank & elpd\_loo & p\_loo & elpd\_diff & weight  & warning\\
+\midrule
+Región → País & 0 & -865.51 & 153.48 & 0 & 0.59  & True\\
+Por País & 1 & -868.53 & 154.80 & 3.02 & 0.37  & True\\
+Por Región & 2 & -1449.97 & 16.04 & 584.46 & 0.04  & False\\
+\bottomrule
+\end{tabular}
+
+\vspace{.25cm}
+El modelo con jerarquía por región y país terminó siendo el mejor en esta ocasión. Está muy cerca del modelo jerárquico por país, pero claramente la complejidad agregada suma valor a la inferencia, de lo contrario hubiera sido castigada por la evaluación. Seguiremos el análisis basado mayormente en este modelo.
+
+\vspace{.5cm}
+
+\includegraphics[width=0.95\linewidth]{imgs/ppc.png}
+
+Las muestras de la posterior predictiva trazan de manera aceptable los datos observados. No es capaz de capturar los picos multimodales, pero persigue bien la trayectoria de manera suave. Buen desempeño en capturar la altura de la forma de \verb|y_pred|.
+
+\vspace{.25cm}
+\includegraphics[width=0.95\linewidth]{imgs/shrinkage_performance.png}
+
+En este caso sí podemos ver contracción de los valores de los interceptos de cada país hacia la media regional. A su vez es interesante destacar otro fenómeno: los \textit{underperformers} y \textit{overperformers}. Son ejemplos de países que según la inferencia del modelo tendrían que tener valores de felicidad más bajos, pero no es el caso y entonces el modelo debe compensar colocándole un intercepto mucho más alto que los valores observados (\textit{overperformers}, ejemplo: Nepal, Nigeria, Zambia, Yemén).
+
+Por el contrario, hay ejemplos donde los predictores indicaban que sus valores de felicidad debían ser muy altos, pero no lo eran. Estos \textit{underperformers} son, por ejemplo: Luxemburgo, Reino Unido, Singapur, Japón, Rumania.
+
+Por último veamos los pesos comparados entre todos los modelos.
+
+\includegraphics[width=0.95\linewidth]{imgs/comparacion_betas.png}
+
+Las variables con mayor peso en el modelo son el índice de desarrollo humano y el desempleo. Los que tienen efectos muy reducidos son el gasto público en educación (posible redundancia con índice de desarrollo humano) y la desigualdad. El último caso es el proxy para la igualdad de género, cuyo rango de confianza incluye al cero, lo que equivale a decir que es probable que la variable no tenga peso para que el individuo califique con mayor puntaje su bienestar individual.
+
+\subsubsection{Modelo de mezcla}
+
+\includegraphics[width=0.475\linewidth]{imgs/ks_mezcla.png}
+\includegraphics[width=0.475\linewidth]{imgs/pvalues_mezcla.png}
+
+\begin{tabular}{lrrrrrrrrl}
+\toprule
+ & rank & elpd\_loo & p\_loo & elpd\_diff & weight & se & dse & warning & scale \\
+\midrule
+7 & 0 & -2682.65 & 10 & 0 & 1 & 21.454191 & 0 & False & log \\
+6 & 1 & -2682.81 & 10.27 & 0.16 & 0 & 21.29 & 0.33 & False & log \\
+5 & 2 & -2685.15 & 10.78 & 2.50 & 0 & 21.14 & 0.88 & False & log \\
+4 & 3 & -2689.39 & 8.42 & 6.74 & 0 & 21.06 & 2.55 & False & log \\
+\bottomrule
+\end{tabular}
+
+\vspace{.5cm}
+El modelo de mezcla lo utilizamos para retomar la pregunta sobre la pertinencia de \verb|ht_region| como buen categorizador de países. Según lo que vemos en estos resultados, tenemos que 7 grupos muestrean mejor que el resto de $K_s$ probados (6, 5 y 4). Nuestra sugerencia inicial de sumar Latinoamérica y el Caribe por un lado y sudeste asiático con este asiático deja la cantidad de regiones en 7. Merece un análisis más profundo y opinión experta, pero es un indicio de que vamos por buen camino.
+
+\section{Resultados y conclusiones}
+\begin{itemize}
+    \item Los modelos jerárquicos junto con los criterios de evaluación de los mismos son excelentes aliados del trabajo en ciencia de datos.
+    \item Pudimos ver que si sobrecomplicamos un modelo que no necesita jerarquías, la evaluación nos va a informar esto.
+    \item Pero si un modelo es jerarquizado pertinentemente, sumamos información extremadamente valiosa para el análisis.
+    \item En este trabajo creamos muchos puntos de partida para continuar investigando. Deberíamos profundizar el análisis de varianza para poder llegar a conclusiones más potentes.
+\end{itemize}
+\section{Referencias y fuentes}
+\begin{itemize}
+    \item Apuntes, slides y notebooks de clase
+    \item \href{https://www.gu.se/en/quality-government}{Quality of Goverment Institute - Universidad de Gotemburgo}
+    \item Algunos de los gráficos fueron generados con ayuda de IA (Claude Sonnet 4.5)
+\end{itemize}
+
+\end{document}
